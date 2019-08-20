@@ -1,0 +1,22 @@
+.books-list {
+    width: 100%;
+    
+}
+
+.book-info {
+    float: right;
+    padding: 50px;
+    width: 50%;
+}
+
+.book {
+    width: 100%;
+    border-bottom: 1px solid black;
+    height: 300px;
+}
+
+
+.book-cover {
+    float: left;
+    padding: 20px;
+}
