@@ -15,7 +15,7 @@ export default class Booklist extends React.Component {
           <div className="book-info">
             <p>Title: {book.volumeInfo.title}</p>
             <p>Author: {book.volumeInfo.authors[0]}</p>
-            {/* <p>Price: {book.saleInfo.listPrice.amount}</p> */}
+            <p>Price: {book.saleInfo.listPrice ? `$${book.saleInfo.listPrice.amount}` : 'Not for sale' }</p>
             <p>Description: {book.volumeInfo.description}</p>
           </div>
         </div>
