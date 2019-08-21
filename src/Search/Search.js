@@ -7,13 +7,28 @@ export default class Search extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchTerm: ""
+      searchTerm: "",
+      printType: "all",
+      bookType: "none"
     };
   }
 
-  getSearchTerm(term) {
+  updateSearchTerm(term) {
+    console.log(term);
     this.setState({
       searchTerm: term
+    });
+  }
+
+  updatePrintType(newSelection) {
+    this.setState({
+      printType: newSelection
+    });
+  }
+
+  updateBookType(newSelection) {
+    this.setState({
+      bookType: newSelection
     });
   }
 
@@ -24,12 +39,25 @@ export default class Search extends React.Component {
           Search:
           <input
             placeholder="Search..."
-            value={this.state.searchTerm}
-            onChange={e => this.getSearchTerm(e.target.value)}
+            onChange={e => this.updateSearchTerm(e.target.value)}
           />
-          <button>Search</button>
+          <button
+            onClick={(e, searchTerm, printType, bookType) =>
+              this.props.handleSearch(
+                e,
+                this.state.searchTerm,
+                this.state.printType,
+                this.state.bookType
+              )
+            }
+          >
+            Search
+          </button>
         </div>
-        <FilterList />
+        <FilterList
+          updatePrintType={newSelection => this.updatePrintType(newSelection)}
+          updateBookType={newSelection => this.updateBookType(newSelection)}
+        />
       </form>
     );
   }

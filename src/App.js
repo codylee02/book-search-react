@@ -1,51 +1,54 @@
-import React from 'react';
-import './App.css';
+import React from "react";
+import "./App.css";
 
-import Header from './Header/Header';
-import Search from './Search/Search';
-import Booklist from './Booklist/Booklist'
-
-const books = [
-  {
-    "Title": "my First Coding Book",
-    "Author": "C. Warren Hollister",
-    "Price": "$50.00",
-    "Description": "the resulting volume is one that will be welcomed by students and general readers alike",
-    "Cover": "http://books.google.com/books/content?id=qbygDgAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api"
-  },
-  {
-    "Title": "Henry VIII",
-    "Author": "Alison Weir",
-    "Price": "$15.50",
-    "Description": "This is a triumph of historical writing whick will appeal equally to the general reader and the serious hisorian",
-    "Cover": "http://books.google.com/books/content?id=iWEwDwAAQBAJ&printsec=frontcover&img=1&zoom=5&edge=curl&source=gbs_api"
-  }
-]
+import Header from "./Header/Header.js";
+import Search from "./Search/Search.js";
+import Booklist from "./Booklist/Booklist";
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state= {
-      searchTerm: "",
-      books: [],
-    }
+    this.state = {
+      books: []
+    };
   }
 
-  handleSearch(term) {
-    
-  }
-
-
+  // handleSearch = ({bookType, title, printType}) => {
+  //   const filterQuery = bookType !== 'No Filter' ? `&filter=${bookType}` : '';
+  //   fetch(
+  //     `https://www.googleapis.com/books/v1/volumes?q=${title}&printType=${printType}${filterQuery}&key=`
+  //   ).then(res => res.json()).then(books => {
+  //     this.setState({ books });
+  //   })
+  // }
+  handleSearch = (e, searchTerm, printType, bookType) => {
+    e.preventDefault();
+    console.log(searchTerm, "from handel", printType, bookType);
+    fetch(
+      `https://www.googleapis.com/books/v1/volumes?q=${searchTerm}&key=AIzaSyAQG9RGL_tzUq2rlmepUugyarJw-hjK5e0`
+    )
+      .then(res => res.json())
+      .then(books => {
+        const booksArr = books.items;
+        this.setState({
+          books: booksArr
+        });
+      });
+  };
 
   render() {
-  return (
-    <>
-    <Header />
-    <Search handleSearch={this.handleSearch}/>
-    <Booklist books={books} />
-    </>
-  );
-}
+    return (
+      <>
+        <Header />
+        <Search
+          handleSearch={(e, searchTerm, printType, bookType) =>
+            this.handleSearch(e, searchTerm, printType, bookType)
+          }
+        />
+        <Booklist books={this.state.books} />
+      </>
+    );
+  }
 }
 
 export default App;
